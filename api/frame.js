@@ -10,10 +10,28 @@ import path from "node:path";
 const CALENDAR_URL =
   "https://script.google.com/macros/s/AKfycbwUO_LkuybqEmAISdZg5MuzyfBw14Yege2GOyaS1nkl5L7lXrL__GFxWE3jSx-vx56c/exec";
 
-const FONT_FILE = path.join(
+const FONT_REGULAR = path.join(
   process.cwd(),
   "fonts",
-  "NotoSansKR.ttf"
+  "Pretendard-Regular.otf"
+);
+
+const FONT_SEMIBOLD = path.join(
+  process.cwd(),
+  "fonts",
+  "Pretendard-SemiBold.otf"
+);
+
+const FONT_BOLD = path.join(
+  process.cwd(),
+  "fonts",
+  "Pretendard-Bold.otf"
+);
+
+const FONT_EXTRABOLD = path.join(
+  process.cwd(),
+  "fonts",
+  "Pretendard-ExtraBold.otf"
 );
 
 const PANEL_W = 800;
@@ -960,8 +978,9 @@ function makeDashboardSvg(calendar, weather, market) {
   <style>
 
     text {
-      font-family: "Noto Sans KR";
-      fill: #000;
+  font-family: "Pretendard";
+  fill: #000;
+}
     }
 
     .thin {
@@ -1847,19 +1866,22 @@ const svg =
 
           font: {
 
-            fontFiles: [
-              FONT_FILE
-            ],
+  fontFiles: [
+    FONT_REGULAR,
+    FONT_SEMIBOLD,
+    FONT_BOLD,
+    FONT_EXTRABOLD
+  ],
 
-            loadSystemFonts:
-              false,
+  loadSystemFonts:
+    false,
 
-            defaultFontFamily:
-              "Noto Sans KR",
+  defaultFontFamily:
+    "Pretendard",
 
-            sansSerifFamily:
-              "Noto Sans KR"
-          }
+  sansSerifFamily:
+    "Pretendard"
+}
         }
       );
 
