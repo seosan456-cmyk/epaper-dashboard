@@ -744,7 +744,7 @@ function eventsSvg(events) {
             height="14"
             rx="2"
             fill="none"
-            stroke="#555"
+            stroke="#000"
             stroke-width="1.4"
           />
 
@@ -815,7 +815,7 @@ function todoSvg(lowerTop) {
             stroke="${
               item.done
                 ? "#c00000"
-                : "#555"
+                : "#000"
             }"
             stroke-width="1.2"
           />
@@ -873,7 +873,7 @@ function importantSvg(lowerTop) {
             fill="${
               item.red
                 ? "#c00000"
-                : "#777"
+                : "#000"
             }"
           />
 
@@ -965,13 +965,13 @@ function makeDashboardSvg(calendar, weather, market) {
     }
 
     .thin {
-      stroke: #999;
-      stroke-width: 1;
+      stroke: #000;
+      stroke-width: 0.7;
     }
 
     .softLine {
-      stroke: #c8c8c8;
-      stroke-width: 1;
+      stroke: #000;
+      stroke-width: 0.5;
     }
 
     .strongLine {
@@ -994,9 +994,9 @@ function makeDashboardSvg(calendar, weather, market) {
     }
 
     .weatherSub {
-      font-size: 12px;
-      fill: #333;
-      font-weight: 450;
+      font-size: 13px;
+      fill: #000;
+      font-weight: 700;
     }
 
 
@@ -1028,7 +1028,7 @@ function makeDashboardSvg(calendar, weather, market) {
 
     .calendarWeek {
       font-size: 10px;
-      fill: #333;
+      fill: #000;
       font-weight: 500;
     }
 
@@ -1054,9 +1054,9 @@ function makeDashboardSvg(calendar, weather, market) {
     /* ---------------- SUMMARY ---------------- */
 
     .infoLabel {
-      font-size: 11px;
-      fill: #333;
-      font-weight: 500;
+      font-size: 12px;
+      fill: #000;
+      font-weight: 700;
     }
 
     .infoBig {
@@ -1065,9 +1065,9 @@ function makeDashboardSvg(calendar, weather, market) {
     }
 
     .infoSmall {
-      font-size: 10px;
-      fill: #333;
-      font-weight: 450;
+      font-size: 11px;
+      fill: #000;
+      font-weight: 650;
     }
 
     .red {
@@ -1085,19 +1085,19 @@ function makeDashboardSvg(calendar, weather, market) {
     .eventCount {
       font-size: 12px;
       font-weight: 650;
-      fill: #333;
+      fill: #000;
     }
 
     .eventTime {
-      font-size: 12px;
-      font-weight: 600;
-      fill: #333;
+      font-size: 13px;
+      font-weight: 700;
+      fill: #000;
     }
 
     .eventEnd {
-      font-size: 10px;
-      fill: #444;
-      font-weight: 450;
+      font-size: 11px;
+      fill: #000;
+      font-weight: 600;
     }
 
     .eventTitle {
@@ -1108,7 +1108,7 @@ function makeDashboardSvg(calendar, weather, market) {
 
     .empty {
       font-size: 15px;
-      fill: #333;
+      fill: #000;
     }
 
 
@@ -1120,9 +1120,9 @@ function makeDashboardSvg(calendar, weather, market) {
     }
 
     .todo {
-      font-size: 11px;
-      fill: #222;
-      font-weight: 500;
+      font-size: 12px;
+      fill: #000;
+      font-weight: 650;
     }
 
     .tag {
@@ -1138,7 +1138,7 @@ function makeDashboardSvg(calendar, weather, market) {
 
     .importantDate {
       font-size: 10px;
-      fill: #333;
+      fill: #000;
       font-weight: 500;
     }
 
@@ -1148,7 +1148,7 @@ function makeDashboardSvg(calendar, weather, market) {
     .marketLabel {
       font-size: 11px;
       font-weight: 700;
-      fill: #333;
+      fill: #000;
     }
 
     .marketBig {
@@ -1163,9 +1163,9 @@ function makeDashboardSvg(calendar, weather, market) {
     }
 
     .exchange {
-      font-size: 10px;
-      fill: #333;
-      font-weight: 500;
+      font-size: 11px;
+      fill: #000;
+      font-weight: 650;
     }
 
   </style>
@@ -1641,7 +1641,7 @@ function makeEPaperData(raw) {
 
       const blackPixel =
         !redPixel &&
-        luminance < 195;
+        luminance < 230;
 
 
       const byteIndex =
