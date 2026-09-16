@@ -548,7 +548,7 @@ function calendarSvg(info) {
             cx="${x}"
             cy="${y - 4}"
             r="10"
-            fill="#111"
+            fill="#000"
           />
 
           <text
@@ -668,14 +668,14 @@ function sparklineSvg(market) {
   const pointColor =
     market.kospi.change >= 0
       ? "#c00000"
-      : "#111111";
+      : "#000000";
 
 
   return `
     <polyline
       points="${points}"
       fill="none"
-      stroke="#111"
+      stroke="#000"
       stroke-width="1.8"
       stroke-linejoin="round"
       stroke-linecap="round"
@@ -961,7 +961,7 @@ function makeDashboardSvg(calendar, weather, market) {
 
     text {
       font-family: "Noto Sans KR";
-      fill: #111;
+      fill: #000;
     }
 
     .thin {
@@ -971,12 +971,12 @@ function makeDashboardSvg(calendar, weather, market) {
 
     .softLine {
       stroke: #000;
-      stroke-width: 0.5;
+      stroke-width: 0.45;
     }
 
     .strongLine {
-      stroke: #222;
-      stroke-width: 1.8;
+      stroke: #000;
+      stroke-width: 1.6;
     }
 
 
@@ -984,8 +984,8 @@ function makeDashboardSvg(calendar, weather, market) {
 
     .weatherName {
       font-size: 16px;
-      font-weight: 650;
-      fill: #222;
+      font-weight: 700;
+      fill: #000;
     }
 
     .temperature {
@@ -996,7 +996,7 @@ function makeDashboardSvg(calendar, weather, market) {
     .weatherSub {
       font-size: 13px;
       fill: #000;
-      font-weight: 700;
+      font-weight: 600;
     }
 
 
@@ -1023,30 +1023,30 @@ function makeDashboardSvg(calendar, weather, market) {
     .calendarTitle {
       font-size: 14px;
       font-weight: 700;
-      fill: #222;
+      fill: #000;
     }
 
     .calendarWeek {
-      font-size: 10px;
+      font-size: 11px;
       fill: #000;
-      font-weight: 500;
+      font-weight: 600;
     }
 
     .calendarSunday {
-      font-size: 10px;
+      font-size: 11px;
       fill: #c00000;
-      font-weight: 500;
+      font-weight: 700;
     }
 
     .calendarDay {
-      font-size: 10px;
-      fill: #111;
-      font-weight: 500;
+      font-size: 11px;
+      fill: #000;
+      font-weight: 600;
     }
 
     .calendarToday {
-      font-size: 10px;
-      fill: white;
+      font-size: 11px;
+      fill: fff;
       font-weight: 700;
     }
 
@@ -1061,13 +1061,13 @@ function makeDashboardSvg(calendar, weather, market) {
 
     .infoBig {
       font-size: 18px;
-      font-weight: 750;
+      font-weight: 800;
     }
 
     .infoSmall {
       font-size: 11px;
       fill: #000;
-      font-weight: 650;
+      font-weight: 600;
     }
 
     .red {
@@ -1084,7 +1084,7 @@ function makeDashboardSvg(calendar, weather, market) {
 
     .eventCount {
       font-size: 12px;
-      font-weight: 650;
+      font-weight: 700;
       fill: #000;
     }
 
@@ -1102,13 +1102,14 @@ function makeDashboardSvg(calendar, weather, market) {
 
     .eventTitle {
       font-size: 16px;
-      font-weight: 750;
-      fill: #111;
+      font-weight: 800;
+      fill: #000;
     }
 
     .empty {
       font-size: 15px;
       fill: #000;
+      font-weight: 600;
     }
 
 
@@ -1116,30 +1117,31 @@ function makeDashboardSvg(calendar, weather, market) {
 
     .lowerTitle {
       font-size: 15px;
-      font-weight: 750;
+      font-weight: 800;
     }
 
     .todo {
       font-size: 12px;
       fill: #000;
-      font-weight: 650;
+      font-weight: 600;
     }
 
     .tag {
       font-size: 9px;
-      fill: white;
+      fill: fff;
       font-weight: 700;
     }
 
     .importantTitle {
       font-size: 11px;
-      font-weight: 650;
+      fill: fff;
+      font-weight: 700;
     }
 
     .importantDate {
-      font-size: 10px;
+      font-size: 11px;
       fill: #000;
-      font-weight: 500;
+      font-weight: 600;
     }
 
 
@@ -1157,15 +1159,15 @@ function makeDashboardSvg(calendar, weather, market) {
     }
 
     .marketChange {
-      font-size: 10px;
+      font-size: 11px;
       fill: #c00000;
-      font-weight: 500;
+      font-weight: 700;
     }
 
     .exchange {
       font-size: 11px;
       fill: #000;
-      font-weight: 650;
+      font-weight: 600;
     }
 
   </style>
@@ -1199,7 +1201,7 @@ function makeDashboardSvg(calendar, weather, market) {
     cy="51"
     r="10"
     fill="none"
-    stroke="#111"
+    stroke="#000"
     stroke-width="2"
   />
 
@@ -1213,7 +1215,7 @@ function makeDashboardSvg(calendar, weather, market) {
       Z
     "
     fill="white"
-    stroke="#111"
+    stroke="#000"
     stroke-width="2"
   />
 
@@ -1375,7 +1377,7 @@ function makeDashboardSvg(calendar, weather, market) {
     height="17"
     rx="3"
     fill="none"
-    stroke="#111"
+    stroke="#000"
     stroke-width="2"
   />
 
@@ -1384,7 +1386,7 @@ function makeDashboardSvg(calendar, weather, market) {
     y="283"
     width="4"
     height="7"
-    fill="#111"
+    fill="#000"
   />
 
   <rect
@@ -1398,7 +1400,7 @@ function makeDashboardSvg(calendar, weather, market) {
       )
     }"
     height="9"
-    fill="#111"
+    fill="#000"
   />
 
   <text
@@ -1529,7 +1531,7 @@ ${formatNumber(
     x="23"
     y="774"
     class="marketChange"
-    style="fill:${market.kospi.change >= 0 ? "#c00000" : "#111111"}">
+    style="fill:${market.kospi.change >= 0 ? "#c00000" : "#000000"}">
 ${
   market.kospi.change >= 0
     ? "▲"
@@ -1592,6 +1594,37 @@ ${formatNumber(
 // 3색 E-ink 변환
 // ======================================================
 
+const EINK_BLACK_THRESHOLD = 230;
+const EINK_RED_MIN = 120;
+const EINK_RED_DELTA = 40;
+
+// 0 = 흰색
+// 1 = 검정
+// 2 = 빨강
+function getEPaperColor(r, g, b) {
+
+  const redPixel =
+    r > EINK_RED_MIN &&
+    r > g + EINK_RED_DELTA &&
+    r > b + EINK_RED_DELTA;
+
+  if (redPixel) {
+    return 2;
+  }
+
+  const luminance =
+    0.299 * r +
+    0.587 * g +
+    0.114 * b;
+
+  if (luminance < EINK_BLACK_THRESHOLD) {
+    return 1;
+  }
+
+  return 0;
+}
+
+
 function makeEPaperData(raw) {
 
   const black =
@@ -1606,66 +1639,39 @@ function makeEPaperData(raw) {
       0xFF
     );
 
+  for (let y = 0; y < PANEL_H; y++) {
 
-  for (
-    let y = 0;
-    y < PANEL_H;
-    y++
-  ) {
-
-    for (
-      let x = 0;
-      x < PANEL_W;
-      x++
-    ) {
+    for (let x = 0; x < PANEL_W; x++) {
 
       const p =
         (y * PANEL_W + x) * 3;
 
-      const r = raw[p];
-      const g = raw[p + 1];
-      const b = raw[p + 2];
-
-
-      const redPixel =
-        r > 120 &&
-        r > g + 40 &&
-        r > b + 40;
-
-
-      const luminance =
-        0.299 * r +
-        0.587 * g +
-        0.114 * b;
-
-
-      const blackPixel =
-        !redPixel &&
-        luminance < 230;
-
+      const color =
+        getEPaperColor(
+          raw[p],
+          raw[p + 1],
+          raw[p + 2]
+        );
 
       const byteIndex =
         y * (PANEL_W / 8) +
         Math.floor(x / 8);
 
-
       const mask =
         0x80 >> (x % 8);
 
-
-      if (redPixel) {
+      if (color === 2) {
 
         red[byteIndex] &=
           ~mask;
 
-      } else if (blackPixel) {
+      } else if (color === 1) {
 
         black[byteIndex] &=
           ~mask;
       }
     }
   }
-
 
   return {
     black,
@@ -1674,6 +1680,85 @@ function makeEPaperData(raw) {
 }
 
 
+// ======================================================
+// 브라우저용 실제 E-ink 미리보기
+// ======================================================
+
+async function makeEPaperPreview(portrait) {
+
+  const {
+    data,
+    info
+  } =
+    await sharp(portrait)
+      .removeAlpha()
+      .raw()
+      .toBuffer({
+        resolveWithObject: true
+      });
+
+  const output =
+    Buffer.alloc(
+      info.width *
+      info.height *
+      3,
+      255
+    );
+
+  for (
+    let i = 0;
+    i < data.length;
+    i += 3
+  ) {
+
+    const color =
+      getEPaperColor(
+        data[i],
+        data[i + 1],
+        data[i + 2]
+      );
+
+    // 검정
+    if (color === 1) {
+
+      output[i] = 0;
+      output[i + 1] = 0;
+      output[i + 2] = 0;
+
+    }
+
+    // 빨강
+    else if (color === 2) {
+
+      output[i] = 192;
+      output[i + 1] = 0;
+      output[i + 2] = 0;
+
+    }
+
+    // 흰색
+    else {
+
+      output[i] = 255;
+      output[i + 1] = 255;
+      output[i + 2] = 255;
+
+    }
+  }
+
+  return sharp(
+    output,
+    {
+      raw: {
+        width: info.width,
+        height: info.height,
+        channels: 3
+      }
+    }
+  )
+    .png()
+    .toBuffer();
+}
 // ======================================================
 // API
 // ======================================================
@@ -1793,22 +1878,33 @@ const svg =
 
     if (!req.query.layer) {
 
-      res.setHeader(
-        "Content-Type",
-        "image/png"
+  let previewImage =
+    portrait;
+
+  if (
+    req.query.preview === "epaper"
+  ) {
+
+    previewImage =
+      await makeEPaperPreview(
+        portrait
       );
+  }
 
-      res.setHeader(
-        "Cache-Control",
-        "no-store"
-      );
+  res.setHeader(
+    "Content-Type",
+    "image/png"
+  );
 
+  res.setHeader(
+    "Cache-Control",
+    "no-store"
+  );
 
-      return res
-        .status(200)
-        .send(portrait);
-    }
-
+  return res
+    .status(200)
+    .send(previewImage);
+}
 
     // ================================================
     // 실제 패널
