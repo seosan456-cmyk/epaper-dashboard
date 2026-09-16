@@ -981,7 +981,6 @@ function makeDashboardSvg(calendar, weather, market) {
   font-family: "Pretendard";
   fill: #000;
 }
-    }
 
     .thin {
       stroke: #000;
@@ -1065,7 +1064,7 @@ function makeDashboardSvg(calendar, weather, market) {
 
     .calendarToday {
       font-size: 11px;
-      fill: fff;
+      fill: #fff;
       font-weight: 700;
     }
 
