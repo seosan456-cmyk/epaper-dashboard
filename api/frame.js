@@ -816,7 +816,7 @@ function todoSvg(lowerTop) {
       (item, index) => {
 
         const y =
-          lowerTop + 37 + index * 22;
+          lowerTop + 34 + index * 18;
 
         return `
           <rect
@@ -879,7 +879,7 @@ function importantSvg(lowerTop) {
       (item, index) => {
 
         const y =
-          lowerTop + 37 + index * 29;
+          lowerTop + 34 + index * 24;
 
         return `
           <rect
@@ -1483,7 +1483,7 @@ const lowerTop =
     x1="238"
     y1="${lowerTop}"
     x2="238"
-    y2="696"
+    y2="706"
     class="thin"
   />
 
@@ -1491,7 +1491,7 @@ const lowerTop =
     x1="20"
     y1="696"
     x2="460"
-    y2="696"
+    y2="706"
     class="strongLine"
   />
 
