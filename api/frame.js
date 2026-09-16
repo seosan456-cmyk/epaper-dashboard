@@ -1098,7 +1098,7 @@ function makeDashboardSvg(calendar, weather, market) {
 
     .sectionTitle {
       font-size: 22px;
-      font-weight: 800;
+      font-weight: 700;
     }
 
     .eventCount {
@@ -1121,7 +1121,7 @@ function makeDashboardSvg(calendar, weather, market) {
 
     .eventTitle {
       font-size: 16px;
-      font-weight: 800;
+      font-weight: 600;
       fill: #000;
     }
 
@@ -1613,7 +1613,7 @@ ${formatNumber(
 // 3색 E-ink 변환
 // ======================================================
 
-const EINK_BLACK_THRESHOLD = 230;
+const EINK_BLACK_THRESHOLD = 120;
 const EINK_RED_MIN = 120;
 const EINK_RED_DELTA = 40;
 
