@@ -728,12 +728,12 @@ function eventsSvg(events) {
 
 
   return events
-    .slice(0, 4)
+    .slice(0, 5)
     .map(
       (event, index) => {
 
         const top =
-          404 + index * 47;
+          404 + index * 40;
 
         const time =
           event.allDay
@@ -749,9 +749,9 @@ function eventsSvg(events) {
         return `
           <line
             x1="24"
-            y1="${top + 35}"
+            y1="${top + 31}"
             x2="456"
-            y2="${top + 35}"
+            y2="${top + 31}"
             class="softLine"
           />
 
@@ -944,22 +944,22 @@ function makeDashboardSvg(calendar, weather, market) {
   // 일정 수에 따른 하단 영역 위치 자동조정
   // ==================================================
 
-  const visibleEvents =
-    Math.min(events.length, 4);
+const visibleEvents =
+  Math.min(events.length, 5);
 
-  const calculatedLower =
-    405 +
-    Math.max(visibleEvents, 1) * 47 +
-    25;
+const calculatedLower =
+  405 +
+  Math.max(visibleEvents, 1) * 40 +
+  15;
 
-  const lowerTop =
-    Math.min(
-      590,
-      Math.max(
-        510,
-        calculatedLower
-      )
-    );
+const lowerTop =
+  Math.min(
+    620,
+    Math.max(
+      510,
+      calculatedLower
+    )
+  );
 
 
   return `
