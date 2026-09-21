@@ -1258,26 +1258,19 @@ const lowerTop = 610;
     최저 ${weather.low}° · 최고 ${weather.high}°
   </text>
 
-  <text
-    x="27"
-    y="178"
-    class="weatherSub">
-    ${esc(weather.location)}
-  </text>
+<text
+  x="27"
+  y="190"
+  class="weatherSub">
+  ${esc(weather.location)} · 강수확률 ${weather.rain}%
+</text>
 
-  <text
-    x="27"
-    y="202"
-    class="weatherSub">
-    강수확률 ${weather.rain}%
-  </text>
-
-  <text
-    x="27"
-    y="226"
-    class="weatherSub">
-    미세먼지 ${esc(weather.dust)}
-  </text>
+<text
+  x="27"
+  y="218"
+  class="weatherSub">
+  미세먼지 ${esc(weather.dust)}
+</text>
 
 
   <!-- 날짜 -->
