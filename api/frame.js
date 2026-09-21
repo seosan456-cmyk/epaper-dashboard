@@ -1152,7 +1152,7 @@ const lowerTop = 610;
 
     .importantTitle {
       font-size: 11px;
-      fill: #fff;
+      fill: #000;
       font-weight: 700;
     }
 
