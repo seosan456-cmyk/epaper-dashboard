@@ -8,7 +8,7 @@ import path from "node:path";
 // ======================================================
 
 const CALENDAR_URL =
-  "https://script.google.com/macros/s/AKfycbwUO_LkuybqEmAISdZg5MuzyfBw14Yege2GOyaS1nkl5L7lXrL__GFxWE3jSx-vx56c/exec";
+  "https://script.google.com/macros/s/AKfycbzU4xLiJPo_dB40LW8YodAXk1z2bQoOYXAfWwsvzDVMG2Hsc8B2wACNXxpm0e9iZQHS/exec";
 
 const FONT_REGULAR = path.join(
   process.cwd(),
