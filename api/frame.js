@@ -1146,13 +1146,13 @@ const lowerTop = 610;
 
     .tag {
       font-size: 9px;
-      fill: fff;
+      fill: #fff;
       font-weight: 700;
     }
 
     .importantTitle {
       font-size: 11px;
-      fill: fff;
+      fill: #fff;
       font-weight: 700;
     }
 
