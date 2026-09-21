@@ -808,9 +808,9 @@ function eventsSvg(events) {
 // TODO
 // ======================================================
 
-function todoSvg(lowerTop) {
+function todoSvg(todos, lowerTop) {
 
-  return TODOS
+  return todos
     .slice(0, 3)
     .map(
       (item, index) => {
@@ -872,9 +872,9 @@ function todoSvg(lowerTop) {
 // 주요 일정
 // ======================================================
 
-function importantSvg(lowerTop) {
+function importantSvg(important, lowerTop) {
 
-  return IMPORTANT
+  return important
     .map(
       (item, index) => {
 
@@ -927,17 +927,109 @@ function importantSvg(lowerTop) {
 // ======================================================
 // 대시보드
 // ======================================================
+function daysUntil(from, to) {
 
+  const start =
+    new Date(
+      `${from}T00:00:00+09:00`
+    );
+
+  const end =
+    new Date(
+      `${to}T00:00:00+09:00`
+    );
+
+  return Math.round(
+    (end - start) /
+    86400000
+  );
+}
+
+
+function makeDday(from, to) {
+
+  const days =
+    daysUntil(from, to);
+
+  if (days === 0) {
+    return "D-DAY";
+  }
+
+  if (days > 0) {
+    return `D-${days}`;
+  }
+
+  return `D+${Math.abs(days)}`;
+}
+
+
+function formatMonthDay(date) {
+
+  const [
+    year,
+    month,
+    day
+  ] = date.split("-");
+
+  return (
+    `${Number(month)}.` +
+    `${Number(day)}`
+  );
+}
 function makeDashboardSvg(calendar, weather, market) {
 
   const info =
     getDateInfo(calendar.date);
 
-  const events =
-    calendar.events || [];
+const events =
+  calendar.events || [];
 
-  const done =
-    TODOS.filter(v => v.done).length;
+const todos =
+  calendar.todos || [];
+
+const done =
+  todos.filter(v => v.done).length;
+
+const dday =
+  calendar.dday
+    ? {
+        title: calendar.dday.title,
+        value: makeDday(
+          calendar.date,
+          calendar.dday.date
+        )
+      }
+    : {
+        title: "",
+        value: "-"
+      };
+
+const important =
+  (calendar.important || [])
+    .map(item => {
+
+      const days =
+        daysUntil(
+          calendar.date,
+          item.date
+        );
+
+      return {
+        title: item.title,
+        tag:
+          makeDday(
+            calendar.date,
+            item.date
+          ),
+        date:
+          formatMonthDay(
+            item.date
+          ),
+        red:
+          days >= 0 &&
+          days <= 30
+      };
+    });
 
 
   // ==================================================
@@ -1368,14 +1460,14 @@ const lowerTop = 610;
     x="181"
     y="313"
     class="infoBig red">
-    ${esc(DDAY.value)}
+    ${esc(dday.value)}
   </text>
 
   <text
     x="181"
     y="333"
     class="infoSmall">
-    ${esc(DDAY.title)}
+    ${esc(dday.title)}
   </text>
 
 
@@ -1500,11 +1592,11 @@ const lowerTop = 610;
     x="190"
     y="${lowerTop + 24}"
     class="infoSmall">
-    ${done}/${TODOS.length}
+    ${done}/${todos.length}
   </text>
 
 
-  ${todoSvg(lowerTop)}
+  ${todoSvg(todos, lowerTop)}
 
 
   <text
@@ -1515,7 +1607,7 @@ const lowerTop = 610;
   </text>
 
 
-  ${importantSvg(lowerTop)}
+  ${importantSvg(todos, lowerTop)}
 
 
   <!-- ================================================= -->
