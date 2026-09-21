@@ -816,7 +816,7 @@ function todoSvg(lowerTop) {
       (item, index) => {
 
         const y =
-          lowerTop + 34 + index * 18;
+          lowerTop + 50 + index * 20;
 
         return `
           <rect
@@ -879,7 +879,7 @@ function importantSvg(lowerTop) {
       (item, index) => {
 
         const y =
-          lowerTop + 34 + index * 24;
+          lowerTop + 50 + index * 24;
 
         return `
           <rect
@@ -952,7 +952,7 @@ const calculatedLower =
   Math.max(visibleEvents, 1) * 40 +
   15;
 
-const lowerTop =
+const lowerTop = 610;
   Math.min(
     620,
     Math.max(
@@ -1489,7 +1489,7 @@ const lowerTop =
 
   <line
     x1="20"
-    y1="696"
+    y1="706"
     x2="460"
     y2="706"
     class="strongLine"
