@@ -749,9 +749,9 @@ function eventsSvg(events) {
         return `
           <line
             x1="24"
-            y1="${top + 31}"
+            y1="${top + 25}"
             x2="456"
-            y2="${top + 31}"
+            y2="${top + 25}"
             class="softLine"
           />
 
@@ -2079,3 +2079,4 @@ const svg =
       });
   }
 }
+
