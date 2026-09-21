@@ -1607,7 +1607,7 @@ const lowerTop = 610;
   </text>
 
 
-  ${importantSvg(imporatnt, lowerTop)}
+  ${importantSvg(important, lowerTop)}
 
 
   <!-- ================================================= -->
