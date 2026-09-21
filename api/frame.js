@@ -768,7 +768,7 @@ function eventsSvg(events) {
 
           <text
             x="57"
-            y="${top}"
+            y="${event.allDay ? top + 6 : top}"
             class="eventTime">
             ${esc(time)}
           </text>
