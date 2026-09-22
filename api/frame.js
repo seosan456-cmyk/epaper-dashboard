@@ -1573,12 +1573,33 @@ const lowerTop = 610;
   </text>
 
 
-  <text
-    x="344"
-    y="301"
-    class="systemSmall">
-    Wi-Fi 연결됨
-  </text>
+<!-- Wi-Fi 아이콘 -->
+<path
+  d="
+    M344 300
+    Q352 292 360 300
+    M347 304
+    Q352 299 357 304
+  "
+  fill="none"
+  stroke="#000"
+  stroke-width="1.6"
+  stroke-linecap="round"
+/>
+
+<circle
+  cx="352"
+  cy="307"
+  r="1.6"
+  fill="#000"
+/>
+
+<text
+  x="366"
+  y="306"
+  class="systemSmall">
+  Wi-Fi 연결됨
+</text>
 
 
   <circle
