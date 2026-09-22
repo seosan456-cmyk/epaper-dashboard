@@ -749,9 +749,9 @@ function eventsSvg(events) {
         return `
           <line
             x1="24"
-            y1="${top + 15}"
+            y1="${top + 31}"
             x2="456"
-            y2="${top + 15}"
+            y2="${top + 31}"
             class="softLine"
           />
 
