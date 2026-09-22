@@ -730,75 +730,74 @@ function eventsSvg(events) {
   return events
     .slice(0, 5)
     .map(
-      (event, index) => {
+(event, index) => {
 
-        const top =
-          404 + index * 40;
+  const rowTop =
+    389 + index * 40;
 
-        const time =
-          event.allDay
-            ? "종일"
-            : event.start;
+  const time =
+    event.allDay
+      ? "종일"
+      : event.start;
 
-        const end =
-          event.allDay
-            ? ""
-            : event.end;
+  const end =
+    event.allDay
+      ? ""
+      : event.end;
 
+  return `
+    <line
+      x1="24"
+      y1="${rowTop + 40}"
+      x2="456"
+      y2="${rowTop + 40}"
+      class="softLine"
+    />
 
-        return `
-          <line
-            x1="24"
-            y1="${top + 31}"
-            x2="456"
-            y2="${top + 31}"
-            class="softLine"
-          />
+    <rect
+      x="29"
+      y="${rowTop + 11}"
+      width="14"
+      height="14"
+      rx="2"
+      fill="none"
+      stroke="#000"
+      stroke-width="1.4"
+    />
 
-          <rect
-            x="29"
-            y="${top - 5}"
-            width="14"
-            height="14"
-            rx="2"
-            fill="none"
-            stroke="#000"
-            stroke-width="1.4"
-          />
+    <text
+      x="57"
+      y="${event.allDay ? rowTop + 24 : rowTop + 15}"
+      class="eventTime">
+      ${esc(time)}
+    </text>
 
+    ${
+      end
+        ? `
           <text
             x="57"
-            y="${event.allDay ? top + 6 : top}"
-            class="eventTime">
-            ${esc(time)}
+            y="${rowTop + 29}"
+            class="eventEnd">
+            -${esc(end)}
           </text>
+        `
+        : ""
+    }
 
-          ${
-            end
-              ? `
-                <text
-                  x="57"
-                  y="${top + 14}"
-                  class="eventEnd">
-                  -${esc(end)}
-                </text>
-              `
-              : ""
-          }
-
-          <text
-            x="126"
-            y="${top + 5}"
-            class="eventTitle">
-            ${esc(
-              shorten(
-                event.title,
-                18
-              )
-            )}
-          </text>
-        `;
-      }
+    <text
+      x="126"
+      y="${rowTop + 24}"
+      class="eventTitle">
+      ${esc(
+        shorten(
+          event.title,
+          18
+        )
+      )}
+    </text>
+  `;
+}
     )
     .join("");
 }
