@@ -975,8 +975,56 @@ function formatMonthDay(date) {
     `${Number(day)}`
   );
 }
-function makeDashboardSvg(calendar, weather, market) {
 
+
+function getSyncInfo(updatedAt, intervalMinutes = 10) {
+
+  const match =
+    String(updatedAt || "")
+      .match(/(\d{2}):(\d{2})/);
+
+  if (!match) {
+    return {
+      last: "--:--",
+      next: "--:--"
+    };
+  }
+
+  const hour =
+    Number(match[1]);
+
+  const minute =
+    Number(match[2]);
+
+  const total =
+    hour * 60 + minute;
+
+  const nextTotal =
+    (total + intervalMinutes) %
+    (24 * 60);
+
+  const nextHour =
+    Math.floor(nextTotal / 60);
+
+  const nextMinute =
+    nextTotal % 60;
+
+  return {
+    last:
+      `${String(hour).padStart(2, "0")}:` +
+      `${String(minute).padStart(2, "0")}`,
+
+    next:
+      `${String(nextHour).padStart(2, "0")}:` +
+      `${String(nextMinute).padStart(2, "0")}`
+  };
+}
+function makeDashboardSvg(calendar, weather, market) {
+const sync =
+  getSyncInfo(
+    calendar.updatedAt,
+    10
+  );
   const info =
     getDateInfo(calendar.date);
 
@@ -1161,7 +1209,17 @@ const lowerTop = 610;
 
 
     /* ---------------- SUMMARY ---------------- */
+.systemSmall {
+  font-size: 10px;
+  fill: #000;
+  font-weight: 600;
+}
 
+.systemSync {
+  font-size: 10px;
+  fill: #000;
+  font-weight: 700;
+}
     .infoLabel {
       font-size: 12px;
       fill: #000;
@@ -1472,9 +1530,11 @@ const lowerTop = 610;
 
   <!-- 배터리 -->
 
+  <!-- 배터리 / 시스템 상태 -->
+
   <rect
-    x="350"
-    y="278"
+    x="344"
+    y="267"
     width="31"
     height="17"
     rx="3"
@@ -1484,16 +1544,16 @@ const lowerTop = 610;
   />
 
   <rect
-    x="381"
-    y="283"
+    x="375"
+    y="272"
     width="4"
     height="7"
     fill="#000"
   />
 
   <rect
-    x="354"
-    y="282"
+    x="348"
+    y="271"
     width="${
       Math.round(
         23 *
@@ -1506,17 +1566,41 @@ const lowerTop = 610;
   />
 
   <text
-    x="393"
-    y="293"
+    x="387"
+    y="282"
     class="infoBig">
     ${BATTERY.percent}%
   </text>
 
+
   <text
-    x="350"
+    x="344"
+    y="301"
+    class="systemSmall">
+    Wi-Fi 연결됨
+  </text>
+
+
+  <circle
+    cx="347"
+    cy="316"
+    r="3.2"
+    fill="#c00000"
+  />
+
+  <text
+    x="355"
     y="319"
-    class="infoSmall">
-    측정 ${esc(BATTERY.measured)}
+    class="systemSync">
+    SYNC ${esc(sync.last)}
+  </text>
+
+
+  <text
+    x="344"
+    y="337"
+    class="systemSmall">
+    다음 갱신 ${esc(sync.next)}
   </text>
 
 
