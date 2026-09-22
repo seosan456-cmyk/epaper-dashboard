@@ -46,8 +46,8 @@ const PANEL_H = 480;
 const WEATHER_LOCATION = "아산";
 
 function weatherCodeToText(code) {
-  if (code === 0) return "맑음";
-  if ([1, 2].includes(code)) return "대체로 맑음";
+  if (code === 0) return "완전 맑음";
+  if ([1, 2].includes(code)) return "맑음";
   if (code === 3) return "흐림";
   if ([45, 48].includes(code)) return "안개";
   if ([51, 53, 55, 56, 57].includes(code)) return "이슬비";
