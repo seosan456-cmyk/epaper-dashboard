@@ -904,14 +904,14 @@ function importantSvg(important, lowerTop) {
 
           <text
             x="301"
-            y="${y - 3}"
+            y="${y - 2}"
             class="importantTitle">
             ${esc(item.title)}
           </text>
 
           <text
             x="440"
-            y="${y - 3}"
+            y="${y - 2}"
             class="importantDate"
             text-anchor="end">
             ${esc(item.date)}
