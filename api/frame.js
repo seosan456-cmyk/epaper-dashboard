@@ -1576,10 +1576,10 @@ const lowerTop = 610;
 <!-- Wi-Fi 아이콘 -->
 <path
   d="
-    M344 300
-    Q352 292 360 300
-    M347 304
-    Q352 299 357 304
+    M344 296
+    Q347 288 355 296
+    M342 300
+    Q347 295 352 300
   "
   fill="none"
   stroke="#000"
@@ -1588,15 +1588,15 @@ const lowerTop = 610;
 />
 
 <circle
-  cx="352"
-  cy="307"
+  cx="347"
+  cy="303"
   r="1.6"
   fill="#000"
 />
 
 <text
-  x="366"
-  y="306"
+  x="361"
+  y="302"
   class="systemSmall">
   Wi-Fi 연결됨
 </text>
