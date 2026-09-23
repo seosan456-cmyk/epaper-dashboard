@@ -501,16 +501,16 @@ function calendarSvg(info) {
 
   // 조금 확대
   const startX = 320;
-  const startY = 72;
+  const startY = 58;
 
   const cellW = 20;
-  const cellH = 23;
+  const cellH = 18;
 
 
   let svg = `
     <text
       x="380"
-      y="43"
+      y="35"
       class="calendarTitle"
       text-anchor="middle">
       ${info.year}.${String(info.month).padStart(2, "0")}
@@ -553,7 +553,7 @@ function calendarSvg(info) {
         startX + col * cellW;
 
       const y =
-        startY + 24 + row * cellH;
+        startY + 20 + row * cellH;
 
       const today =
         day === info.day;
@@ -733,7 +733,7 @@ function eventsSvg(events) {
 (event, index) => {
 
   const rowTop =
-    389 + index * 40;
+    351 + index * 40;
 
   const time =
     event.allDay
@@ -1091,7 +1091,7 @@ const calculatedLower =
   Math.max(visibleEvents, 1) * 40 +
   15;
 
-const lowerTop = 610;
+const lowerTop = 570;
   Math.min(
     620,
     Math.max(
@@ -1346,9 +1346,9 @@ const lowerTop = 610;
 
   <line
     x1="157"
-    y1="25"
+    y1="20"
     x2="157"
-    y2="243"
+    y2="210"
     class="thin"
   />
 
@@ -1395,28 +1395,28 @@ const lowerTop = 610;
 
   <text
     x="25"
-    y="120"
+    y="105"
     class="temperature">
     ${weather.temp}°
   </text>
 
   <text
     x="27"
-    y="146"
+    y="130"
     class="weatherSub">
     최저 ${weather.low}° · 최고 ${weather.high}°
   </text>
 
 <text
   x="27"
-  y="190"
+  y="160"
   class="weatherSub">
   ${esc(weather.location)} · 강수확률 ${weather.rain}%
 </text>
 
 <text
   x="27"
-  y="218"
+  y="185"
   class="weatherSub">
   미세먼지 ${esc(weather.dust)}
 </text>
@@ -1426,7 +1426,7 @@ const lowerTop = 610;
 
   <text
     x="231"
-    y="58"
+    y="45"
     class="year"
     text-anchor="middle">
     ${info.year}
@@ -1434,7 +1434,7 @@ const lowerTop = 610;
 
   <text
     x="231"
-    y="153"
+    y="122"
     class="bigDay"
     text-anchor="middle">
     ${info.day}
@@ -1442,7 +1442,7 @@ const lowerTop = 610;
 
   <text
     x="231"
-    y="198"
+    y="160"
     class="weekday"
     text-anchor="middle">
     ${esc(info.weekday)}
@@ -1460,17 +1460,17 @@ const lowerTop = 610;
 
   <line
     x1="20"
-    y1="260"
+    y1="225"
     x2="460"
-    y2="260"
+    y2="225"
     class="strongLine"
   />
 
   <line
     x1="20"
-    y1="343"
+    y1="305"
     x2="460"
-    y2="343"
+    y2="305"
     class="strongLine"
   />
 
@@ -1493,14 +1493,14 @@ const lowerTop = 610;
 
   <text
     x="29"
-    y="284"
+    y="249"
     class="infoLabel">
     오늘 일정
   </text>
 
   <text
     x="29"
-    y="318"
+    y="283"
     class="infoBig">
     ${events.length}건
   </text>
@@ -1508,21 +1508,21 @@ const lowerTop = 610;
 
   <text
     x="181"
-    y="284"
+    y="249"
     class="infoLabel">
     D-day
   </text>
 
   <text
     x="181"
-    y="313"
+    y="278"
     class="infoBig red">
     ${esc(dday.value)}
   </text>
 
   <text
     x="181"
-    y="333"
+    y="298"
     class="infoSmall">
     ${esc(dday.title)}
   </text>
@@ -1534,7 +1534,7 @@ const lowerTop = 610;
 
   <rect
     x="344"
-    y="267"
+    y="232"
     width="31"
     height="17"
     rx="3"
@@ -1545,7 +1545,7 @@ const lowerTop = 610;
 
   <rect
     x="375"
-    y="272"
+    y="237"
     width="4"
     height="7"
     fill="#000"
@@ -1553,7 +1553,7 @@ const lowerTop = 610;
 
   <rect
     x="348"
-    y="271"
+    y="236"
     width="${
       Math.round(
         23 *
@@ -1589,14 +1589,14 @@ const lowerTop = 610;
 
 <circle
   cx="347"
-  cy="303"
+  cy="268"
   r="1.6"
   fill="#000"
 />
 
 <text
   x="361"
-  y="302"
+  y="269"
   class="systemSmall">
   Wi-Fi 연결됨
 </text>
@@ -1604,14 +1604,14 @@ const lowerTop = 610;
 
   <circle
     cx="347"
-    cy="316"
+    cy="271"
     r="3.2"
     fill="#c00000"
   />
 
   <text
     x="355"
-    y="319"
+    y="274"
     class="systemSync">
     SYNC ${esc(sync.last)}
   </text>
@@ -1619,7 +1619,7 @@ const lowerTop = 610;
 
   <text
     x="344"
-    y="337"
+    y="302"
     class="systemSmall">
     다음 갱신 ${esc(sync.next)}
   </text>
@@ -1631,14 +1631,14 @@ const lowerTop = 610;
 
   <text
     x="23"
-    y="375"
+    y="337"
     class="sectionTitle">
     오늘의 일정
   </text>
 
   <text
     x="452"
-    y="375"
+    y="337"
     text-anchor="end"
     class="eventCount">
     ${events.length}건
@@ -1646,9 +1646,9 @@ const lowerTop = 610;
 
   <line
     x1="22"
-    y1="389"
+    y1="351"
     x2="458"
-    y2="389"
+    y2="351"
     class="softLine"
   />
 
@@ -1801,7 +1801,7 @@ ${formatNumber(
 // 3색 E-ink 변환
 // ======================================================
 
-const EINK_BLACK_THRESHOLD = 190;
+const EINK_BLACK_THRESHOLD = 180;
 const EINK_RED_MIN = 120;
 const EINK_RED_DELTA = 40;
 
