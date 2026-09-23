@@ -175,10 +175,30 @@ const DDAY = {
   title: "겨울방학"
 };
 
-const BATTERY = {
-  percent: 82,
-  measured: "14:10"
-};
+// Request-scoped telemetry: never reuse another device's battery value.
+// Generic 1-cell Li-ion voltage curve; approximate only, not capacity calibration.
+function readBattery(query = {}) {
+  const unknown = { percent: null, label: "--", fill: 0 };
+  const value = query.battery_mv;
+  if (typeof value !== "string" || !/^\d{4}$/.test(value)) return unknown;
+  const mv = Number(value);
+  if (mv < 2500 || mv > 4400) return unknown;
+  if (query.battery_high === "1" || mv >= 3900) {
+    return { percent: null, label: "높음", fill: 23 };
+  }
+  const curve = [[3000,0],[3300,5],[3500,10],[3600,20],
+    [3700,35],[3750,45],[3800,55],[3850,65],[3900,75]];
+  let percent = 0;
+  for (let i = 1; i < curve.length; i++) {
+    if (mv <= curve[i][0]) {
+      const [lo, p0] = curve[i-1];
+      const [hi, p1] = curve[i];
+      percent = Math.max(0, Math.min(100, Math.round(p0 + (mv-lo)*(p1-p0)/(hi-lo))));
+      break;
+    }
+  }
+  return { percent, label: `~${percent}%`, fill: Math.round(23*percent/100) };
+}
 const FALLBACK_MARKET = {
   kospi: {
     value: 0,
@@ -976,11 +996,11 @@ function getSyncInfo(updatedAt, intervalMinutes = 10) {
       `${String(nextMinute).padStart(2, "0")}`
   };
 }
-function makeDashboardSvg(calendar, weather, market) {
+function makeDashboardSvg(calendar, weather, market, battery = readBattery()) {
 const sync =
   getSyncInfo(
     calendar.updatedAt,
-    10
+    5
   );
   const info =
     getDateInfo(calendar.date);
@@ -1522,13 +1542,7 @@ const lowerTop = 570;
 <rect
   x="348"
   y="235"
-  width="${
-    Math.round(
-      23 *
-      BATTERY.percent /
-      100
-    )
-  }"
+  width="${battery.fill}"
   height="9"
   fill="#000"
 />
@@ -1537,7 +1551,7 @@ const lowerTop = 570;
   x="387"
   y="246"
   class="infoBig">
-  ${BATTERY.percent}%
+  ${esc(battery.label)}
 </text>
 
 
@@ -1937,6 +1951,8 @@ export default async function handler(
   res
 ) {
 
+  res.setHeader("Cache-Control", "no-store");
+
   try {
 
     const response =
@@ -2003,7 +2019,8 @@ const svg =
   makeDashboardSvg(
     calendar,
     weather,
-    market
+    market,
+    readBattery(req.query)
   );
 
 
