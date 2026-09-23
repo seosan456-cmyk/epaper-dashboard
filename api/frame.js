@@ -1123,17 +1123,17 @@ const lowerTop = 610;
 
     .thin {
       stroke: #000;
-      stroke-width: 0.7;
+      stroke-width: 1;
     }
 
     .softLine {
       stroke: #000;
-      stroke-width: 0.45;
+      stroke-width: 1;
     }
 
     .strongLine {
       stroke: #000;
-      stroke-width: 1.6;
+      stroke-width: 2;
     }
 
 
