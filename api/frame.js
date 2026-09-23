@@ -375,44 +375,6 @@ const TODOS = [
   { done: false, title: "교실 정리" }
 ];
 
-const important =
-  (calendar.important || [])
-    .filter(item =>
-      daysUntil(
-        calendar.date,
-        item.date
-      ) >= 0
-    )
-    .sort(
-      (a, b) =>
-        daysUntil(calendar.date, a.date) -
-        daysUntil(calendar.date, b.date)
-    )
-    .slice(0, 2)
-    .map(item => {
-
-      const days =
-        daysUntil(
-          calendar.date,
-          item.date
-        );
-
-      return {
-        title: item.title,
-        tag:
-          makeDday(
-            calendar.date,
-            item.date
-          ),
-        date:
-          formatMonthDay(
-            item.date
-          ),
-        red:
-          days >= 0 &&
-          days <= 30
-      };
-    });
 
 
 
@@ -1045,7 +1007,43 @@ const dday =
         title: "",
         value: "-"
       };
+const important =
+  (calendar.important || [])
+    .filter(item =>
+      daysUntil(
+        calendar.date,
+        item.date
+      ) >= 0
+    )
+    .sort(
+      (a, b) =>
+        daysUntil(calendar.date, a.date) -
+        daysUntil(calendar.date, b.date)
+    )
+    .slice(0, 2)
+    .map(item => {
 
+      const days =
+        daysUntil(
+          calendar.date,
+          item.date
+        );
+
+      return {
+        title: item.title,
+        tag:
+          makeDday(
+            calendar.date,
+            item.date
+          ),
+        date:
+          formatMonthDay(
+            item.date
+          ),
+        red:
+          days <= 30
+      };
+    });
 
 
 
