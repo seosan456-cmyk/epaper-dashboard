@@ -1046,32 +1046,7 @@ const dday =
         value: "-"
       };
 
-const important =
-  (calendar.important || [])
-    .map(item => {
 
-      const days =
-        daysUntil(
-          calendar.date,
-          item.date
-        );
-
-      return {
-        title: item.title,
-        tag:
-          makeDday(
-            calendar.date,
-            item.date
-          ),
-        date:
-          formatMonthDay(
-            item.date
-          ),
-        red:
-          days >= 0 &&
-          days <= 30
-      };
-    });
 
 
   // ==================================================
