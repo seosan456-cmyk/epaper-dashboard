@@ -1801,7 +1801,7 @@ ${formatNumber(
 // 3색 E-ink 변환
 // ======================================================
 
-const EINK_BLACK_THRESHOLD = 200;
+const EINK_BLACK_THRESHOLD = 150;
 const EINK_RED_MIN = 120;
 const EINK_RED_DELTA = 40;
 
