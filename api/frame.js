@@ -1475,20 +1475,20 @@ const lowerTop = 570;
   />
 
   <line
-    x1="162"
-    y1="260"
-    x2="162"
-    y2="343"
-    class="thin"
-  />
+  x1="162"
+  y1="225"
+  x2="162"
+  y2="305"
+  class="thin"
+/>
 
-  <line
-    x1="328"
-    y1="260"
-    x2="328"
-    y2="343"
-    class="thin"
-  />
+<line
+  x1="328"
+  y1="225"
+  x2="328"
+  y2="305"
+  class="thin"
+/>
 
 
   <text
@@ -1532,54 +1532,54 @@ const lowerTop = 570;
 
   <!-- 배터리 / 시스템 상태 -->
 
-  <rect
-    x="344"
-    y="232"
-    width="31"
-    height="17"
-    rx="3"
-    fill="none"
-    stroke="#000"
-    stroke-width="2"
-  />
+<rect
+  x="344"
+  y="231"
+  width="31"
+  height="17"
+  rx="3"
+  fill="none"
+  stroke="#000"
+  stroke-width="2"
+/>
 
-  <rect
-    x="375"
-    y="237"
-    width="4"
-    height="7"
-    fill="#000"
-  />
+<rect
+  x="375"
+  y="236"
+  width="4"
+  height="7"
+  fill="#000"
+/>
 
-  <rect
-    x="348"
-    y="236"
-    width="${
-      Math.round(
-        23 *
-        BATTERY.percent /
-        100
-      )
-    }"
-    height="9"
-    fill="#000"
-  />
+<rect
+  x="348"
+  y="235"
+  width="${
+    Math.round(
+      23 *
+      BATTERY.percent /
+      100
+    )
+  }"
+  height="9"
+  fill="#000"
+/>
 
-  <text
-    x="387"
-    y="282"
-    class="infoBig">
-    ${BATTERY.percent}%
-  </text>
+<text
+  x="387"
+  y="246"
+  class="infoBig">
+  ${BATTERY.percent}%
+</text>
 
 
 <!-- Wi-Fi 아이콘 -->
 <path
   d="
-    M339 296
-    Q347 288 355 296
-    M342 300
-    Q347 295 352 300
+    M339 258
+    Q347 250 355 258
+    M342 262
+    Q347 257 352 262
   "
   fill="none"
   stroke="#000"
@@ -1589,40 +1589,42 @@ const lowerTop = 570;
 
 <circle
   cx="347"
-  cy="268"
+  cy="265"
   r="1.6"
   fill="#000"
 />
 
 <text
   x="361"
-  y="269"
+  y="262"
   class="systemSmall">
   Wi-Fi 연결됨
 </text>
 
 
-  <circle
-    cx="347"
-    cy="271"
-    r="3.2"
-    fill="#c00000"
-  />
+<!-- SYNC -->
+<circle
+  cx="347"
+  cy="276"
+  r="3.2"
+  fill="#c00000"
+/>
 
-  <text
-    x="355"
-    y="274"
-    class="systemSync">
-    SYNC ${esc(sync.last)}
-  </text>
+<text
+  x="355"
+  y="279"
+  class="systemSync">
+  SYNC ${esc(sync.last)}
+</text>
 
 
-  <text
-    x="344"
-    y="302"
-    class="systemSmall">
-    다음 갱신 ${esc(sync.next)}
-  </text>
+<!-- 다음 갱신 -->
+<text
+  x="344"
+  y="297"
+  class="systemSmall">
+  다음 갱신 ${esc(sync.next)}
+</text>
 
 
   <!-- ================================================= -->
