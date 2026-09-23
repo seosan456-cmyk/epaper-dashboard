@@ -1210,13 +1210,13 @@ const lowerTop = 570;
 
     /* ---------------- SUMMARY ---------------- */
 .systemSmall {
-  font-size: 12px;
+  font-size: 11px;
   fill: #000;
   font-weight: 600;
 }
 
 .systemSync {
-  font-size: 12px;
+  font-size: 11px;
   fill: #000;
   font-weight: 600;
 }
@@ -1356,7 +1356,7 @@ const lowerTop = 570;
     x1="305"
     y1="25"
     x2="305"
-    y2="243"
+    y2="210"
     class="thin"
   />
 
