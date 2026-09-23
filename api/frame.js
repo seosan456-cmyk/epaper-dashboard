@@ -375,20 +375,44 @@ const TODOS = [
   { done: false, title: "교실 정리" }
 ];
 
-const IMPORTANT = [
-  {
-    tag: "D-12",
-    title: "중간고사",
-    date: "9.19",
-    red: true
-  },
-  {
-    tag: "D-72",
-    title: "겨울방학",
-    date: "11.27",
-    red: false
-  }
-];
+const important =
+  (calendar.important || [])
+    .filter(item =>
+      daysUntil(
+        calendar.date,
+        item.date
+      ) >= 0
+    )
+    .sort(
+      (a, b) =>
+        daysUntil(calendar.date, a.date) -
+        daysUntil(calendar.date, b.date)
+    )
+    .slice(0, 2)
+    .map(item => {
+
+      const days =
+        daysUntil(
+          calendar.date,
+          item.date
+        );
+
+      return {
+        title: item.title,
+        tag:
+          makeDday(
+            calendar.date,
+            item.date
+          ),
+        date:
+          formatMonthDay(
+            item.date
+          ),
+        red:
+          days >= 0 &&
+          days <= 30
+      };
+    });
 
 
 
@@ -807,58 +831,29 @@ function eventsSvg(events) {
 // TODO
 // ======================================================
 
-function todoSvg(todos, lowerTop) {
+function memoSvg(todos, lowerTop) {
 
   return todos
-    .slice(0, 3)
+    .slice(0, 2)
     .map(
       (item, index) => {
 
         const y =
-          lowerTop + 50 + index * 20;
+          lowerTop + 52 + index * 28;
 
         return `
-          <rect
-            x="29"
-            y="${y - 10}"
-            width="10"
-            height="10"
-            rx="1"
-            fill="${
-              item.done
-                ? "#c00000"
-                : "white"
-            }"
-            stroke="${
-              item.done
-                ? "#c00000"
-                : "#000"
-            }"
-            stroke-width="1.2"
+          <circle
+            cx="31"
+            cy="${y - 4}"
+            r="2.5"
+            fill="#c00000"
           />
 
-          ${
-            item.done
-              ? `
-                <path
-                  d="
-                    M31 ${y - 5}
-                    L34 ${y - 2}
-                    L38 ${y - 8}
-                  "
-                  stroke="white"
-                  stroke-width="1.2"
-                  fill="none"
-                />
-              `
-              : ""
-          }
-
           <text
-            x="49"
+            x="42"
             y="${y}"
-            class="todo">
-            ${esc(item.title)}
+            class="memo">
+            ${esc(shorten(item.title, 24))}
           </text>
         `;
       }
@@ -1287,10 +1282,10 @@ const lowerTop = 570;
       font-weight: 800;
     }
 
-    .todo {
-      font-size: 12px;
-      fill: #000;
-      font-weight: 600;
+    .memo {
+     font-size: 13px;
+     fill: #000;
+     font-weight: 600;
     }
 
     .tag {
@@ -1687,22 +1682,14 @@ const lowerTop = 570;
   />
 
 
-  <text
-    x="27"
-    y="${lowerTop + 24}"
-    class="lowerTitle">
-    오늘 할 일
-  </text>
+<text
+  x="27"
+  y="${lowerTop + 24}"
+  class="lowerTitle">
+  메모
+</text>
 
-  <text
-    x="190"
-    y="${lowerTop + 24}"
-    class="infoSmall">
-    ${done}/${todos.length}
-  </text>
-
-
-  ${todoSvg(todos, lowerTop)}
+${memoSvg(todos, lowerTop)}
 
 
   <text
