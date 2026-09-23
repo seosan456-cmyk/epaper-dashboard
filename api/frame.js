@@ -1333,7 +1333,7 @@ const lowerTop = 570;
 
   <circle
     cx="47"
-    cy="51"
+    cy="41"
     r="10"
     fill="none"
     stroke="#000"
@@ -1342,10 +1342,10 @@ const lowerTop = 570;
 
   <path
     d="
-      M29 65
-      C29 54 39 51 47 56
-      C50 44 66 44 70 55
-      C81 52 88 59 86 66
+      M29 55
+      C29 44 39 41 47 46
+      C50 34 66 34 70 45
+      C81 42 88 49 86 56
       H31
       Z
     "
@@ -1356,7 +1356,7 @@ const lowerTop = 570;
 
   <text
     x="91"
-    y="58"
+    y="48"
     class="weatherName">
     ${esc(weather.condition)}
   </text>
