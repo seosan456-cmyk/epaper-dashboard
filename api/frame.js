@@ -29,9 +29,9 @@ export default async function handler(req,res){
   try{
     const generatedAt=new Date();
     const data=mode==='dashboard'?await loadDashboard():{calendar:{date:seoulDate(generatedAt)},summary:'자료 정상',marketLabel:''};
-    if(data.allFailed)return res.status(503).json({error:'Data temporarily unavailable'});
+    if(data.calendarMissing || data.allFailed)return res.status(503).json({error:'Data temporarily unavailable'});
     const sleepSeconds=queryInt({...q,sleep_s:String(q.sleep_s??300)},'sleep_s',300,3600,300);
-    const status={generated:seoulTime(generatedAt),summary:data.summary,market:data.marketLabel,intervalMinutes:Math.round(sleepSeconds/60)};
+    const status={generated:seoulTime(data.calendarAt ? new Date(data.calendarAt) : generatedAt),summary:data.summary,market:data.marketLabel,intervalMinutes:Math.round(sleepSeconds/60)};
     const frame=await renderDashboard(data,readBattery(q),status,{mode,memo});
     let output,type;
     if(q.format==='bundle'){output=bundleFrame(frame.black,frame.red,Math.floor(generatedAt.getTime()/1000),sleepSeconds);type='application/octet-stream';}
