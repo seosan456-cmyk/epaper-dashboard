@@ -1,3 +1,4 @@
+import {validateDashboard,withDashboard} from '../lib/epaper/dashboard-content.mjs';
 import {timingSafeEqual} from 'node:crypto';
 import {loadDashboard} from '../lib/epaper/data.mjs';
 import {readBattery,queryInt,seoulTime,seoulDate} from '../lib/epaper/model.mjs';
@@ -15,7 +16,7 @@ export default async function handler(req,res){
     if(method==='POST'){
       if(!String(req.headers?.['content-type']||'').toLowerCase().startsWith('application/json'))return res.status(415).json({error:'JSON required'});
       const raw=typeof req.body==='string'?req.body:JSON.stringify(req.body??{});
-      if(Buffer.byteLength(raw)>4096)return res.status(413).json({error:'Request too large'});
+      if(Buffer.byteLength(raw)>8192)return res.status(413).json({error:'Request too large'});
       q=JSON.parse(raw);if(!q||typeof q!=='object'||Array.isArray(q))throw Error('Invalid body');
     }else q=req.query||{};
   }catch{return res.status(400).json({error:'Invalid JSON'});}
@@ -26,10 +27,14 @@ export default async function handler(req,res){
   if(typeof memo!=='string'||Buffer.byteLength(memo)>600||[...memo].length>200||/[\x00-\x09\x0b-\x1f\x7f]/.test(memo))return res.status(400).json({error:'Invalid memo'});
   // Personal notes are POST-only so they do not appear in request URLs.
   if(method==='GET'&&memo)return res.status(400).json({error:'Use POST for memo'});
+  let dashboard;
+  try{if(q.dashboard!==undefined){if(method!=='POST')return res.status(400).json({error:'Use POST for dashboard'});dashboard=validateDashboard(q.dashboard);}}
+  catch{return res.status(400).json({error:'Invalid dashboard content'});}
   try{
     const generatedAt=new Date();
     const data=mode==='dashboard'?await loadDashboard():{calendar:{date:seoulDate(generatedAt)},summary:'자료 정상',marketLabel:''};
     if(data.calendarMissing || data.allFailed)return res.status(503).json({error:'Data temporarily unavailable'});
+    if(dashboard&&mode==='dashboard')data.calendar=withDashboard(data.calendar,dashboard,seoulDate(generatedAt));
     const sleepSeconds=queryInt({...q,sleep_s:String(q.sleep_s??300)},'sleep_s',300,3600,300);
     const status={generated:seoulTime(data.calendarAt ? new Date(data.calendarAt) : generatedAt),summary:data.summary,market:data.marketLabel,intervalMinutes:Math.round(sleepSeconds/60)};
     const frame=await renderDashboard(data,readBattery(q),status,{mode,memo});
