@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f5f3ee">
+  <title>전자잉크 · 기기 설정</title>
+  <style>
+    :root{color-scheme:light;--paper:#f5f3ee;--ink:#222823;--muted:#677066;--line:#d9ded4;--accent:#365b42;--error:#923d2b}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif}
+    [hidden]{display:none!important}main{max-width:620px;margin:auto;padding:22px 16px 0}header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}h1{font-size:23px;letter-spacing:-1px;margin:0}.eyebrow{font-size:10px;letter-spacing:2px;font-weight:700;color:var(--muted);margin-bottom:3px}.version{font-size:10px;color:var(--muted)}
+    button,input,select,textarea{font:inherit}button{border:0;cursor:pointer;font-weight:650;min-height:44px;padding:10px 13px;border-radius:9px}button:disabled{opacity:.45;cursor:default}.primary{background:var(--accent);color:white}.secondary{background:#e8ece3;color:var(--ink)}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #7e9d80;outline-offset:2px}
+    .connect-card{background:white;border:1px solid var(--line);border-radius:14px;padding:13px;display:flex;align-items:center;gap:12px}.connection-copy{flex:1;min-width:0}.connection-top{display:flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;background:#abb3a7;flex-shrink:0}.dot.on{background:var(--accent)}#deviceName{font-size:14px;overflow-wrap:anywhere}#connectionState{font-size:11px;color:var(--muted);margin-top:3px}#connect{font-size:12px;white-space:nowrap}
+    #message{font-size:12px;color:var(--muted);line-height:1.55;min-height:38px;margin:9px 2px 13px;overflow-wrap:anywhere}#message.error,.counter.bad{color:var(--error)}
+    .tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;background:#e8ece3;border-radius:11px;padding:4px;margin-bottom:15px}.tabs button{font-size:13px;min-height:40px;border-radius:8px;background:transparent;color:var(--muted)}.tabs button[aria-selected=true]{background:white;color:var(--ink);box-shadow:0 1px 4px #24332112}.tab-count{font-size:10px;background:#eef1e9;border-radius:20px;padding:1px 5px;margin-left:4px}
+    fieldset{border:0;padding:0;margin:0;min-width:0}fieldset:disabled>.panel,fieldset:disabled .editor{opacity:.62}.panel{padding-bottom:18px}.section{margin:0 0 18px}.section-head{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:8px}h2{font-size:14px;margin:0;letter-spacing:-.3px}.hint{font-size:11px;color:var(--muted);line-height:1.55;margin:6px 0}.counter{font-size:10px;color:var(--muted);text-align:right;margin-top:4px;min-height:15px}
+    label,.column-head{font-size:12px}input[type=text],input[type=password],input[type=date],select,textarea{display:block;min-width:0;width:100%;border:1px solid #ced5c8;border-radius:8px;background:white;color:var(--ink);padding:10px;font-size:16px;min-height:44px}input[type=date]{font-size:13px;padding:10px 7px}input:focus,select:focus,textarea:focus{outline:2px solid #7e9d80;outline-offset:1px}input[aria-invalid=true],textarea[aria-invalid=true]{border-color:var(--error)}textarea{resize:vertical;line-height:1.6}label>input,label>select,label>textarea{margin-top:5px}
+    .date-row,.column-head{display:grid;grid-template-columns:minmax(0,1fr) 135px;gap:8px}.column-head{color:var(--muted);margin-bottom:5px}.date-row+.date-row{margin-top:8px}.notes{display:grid;gap:10px}.note-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;font-size:12px}.note-head span{font-size:10px;color:var(--muted)}.note-input{height:76px;min-height:76px}
+    .modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.modes label{position:relative}.modes input{position:absolute;opacity:0}.modes span{display:block;padding:10px 4px;text-align:center;background:white;border:1px solid var(--line);border-radius:8px;font-size:12px;cursor:pointer}.modes input:checked+span{border-color:var(--accent);background:#e8efe5;color:var(--accent);font-weight:700}.modes input:focus-visible+span{outline:3px solid #7e9d80;outline-offset:2px}
+    .note-head .bad{color:var(--error)}.two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.switch{display:flex;align-items:center;gap:9px;min-height:44px;font-size:13px}.switch input{width:19px;height:19px;margin:0;accent-color:var(--accent)}.setting-row{padding:13px 0;border-bottom:1px solid var(--line)}.setting-row:first-child{padding-top:0}.setting-row small{display:block;font-size:11px;color:var(--muted);margin-left:28px}.quiet-hours{margin-top:8px}
+    .network{border:1px solid var(--line);background:white;border-radius:11px;margin-bottom:9px;overflow:hidden}.network>summary{list-style:none;display:flex;align-items:center;gap:10px;padding:12px;min-height:61px;cursor:pointer}.network>summary::-webkit-details-marker{display:none}.network>summary::after{content:'＋';font-size:18px;color:var(--muted)}.network[open]>summary::after{content:'−'}.network[open]>summary{border-bottom:1px solid var(--line)}.network-index{font-size:11px;color:var(--muted)}.network-copy{flex:1;min-width:0}.network-copy b{display:block;font-size:13px;overflow-wrap:anywhere}.network-copy small{display:block;font-size:10px;color:var(--muted);margin-top:2px}.network-body{padding:12px}.network-body label{display:block;margin-bottom:11px}.network-body .switch{display:flex;margin-bottom:0}.network-actions{display:flex;gap:8px;margin-top:6px}.network-actions button{min-height:42px;font-size:12px;padding:8px 11px}.remove{background:#f3e7e2;color:var(--error)}.password-field{display:flex;align-items:stretch;gap:5px;margin-top:5px}.password-field input{margin:0;flex:1;width:0}.password-field button{font-size:11px;min-width:48px;flex-shrink:0;padding:6px 8px}.add-network{width:100%;font-size:12px;border:1px dashed #b9c4b2;background:transparent}.wifi-status{padding:10px 12px;background:#e8ece3;border-radius:9px;font-size:12px;margin:0 0 12px}
+    .advanced{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}.advanced>summary{font-size:12px;font-weight:650;cursor:pointer;min-height:35px}.advanced button{font-size:12px;width:100%;margin-top:9px}.advanced .hint{margin:7px 0}.advanced a{color:var(--accent)}
+    footer{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:620px;z-index:2;background:#f5f3eef5;border-top:1px solid var(--line);padding:11px 16px calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(10px)}footer .primary{width:100%;font-size:14px;min-height:48px}#saveState{font-size:10px;color:var(--muted);text-align:center;margin-top:5px;min-height:15px}input,textarea,select,summary{scroll-margin-bottom:120px}progress{width:100%;height:4px;accent-color:var(--accent);display:block;margin-bottom:7px}form{margin:0;padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+    @media(min-width:600px){main{padding-top:32px}.date-row,.column-head{grid-template-columns:minmax(0,1fr) 170px}.notes{grid-template-columns:repeat(2,minmax(0,1fr))}.note-input{height:105px}.panel{padding-bottom:22px}}
+    @media(max-width:359px){main{padding:18px 12px 0}.date-row,.column-head{grid-template-columns:minmax(0,1fr) 126px;gap:6px}footer{padding-left:12px;padding-right:12px}h1{font-size:21px}}
+  </style>
+</head>
+<body>
+<main>
+  <header><div><div class="eyebrow">E-PAPER</div><h1>기기 설정</h1></div><span class="version">설정 화면 2.3</span></header>
+  <div class="connect-card"><div class="connection-copy"><div class="connection-top"><span id="connectionDot" class="dot" aria-hidden="true"></span><b id="deviceName">기기를 연결해 주세요</b></div><div id="connectionState">블루투스 연결 전</div></div><button type="button" id="connect" class="primary">기기 연결</button></div>
+  <p id="message" role="status" aria-live="polite">RESET 또는 KEY를 길게 눌러 설정 모드를 켠 뒤 연결하세요.</p>
+  <div class="tabs" role="tablist" aria-label="설정 영역">
+    <button id="tabContent" role="tab" type="button" aria-selected="true" aria-controls="panelContent">내용</button>
+    <button id="tabWifi" role="tab" type="button" aria-selected="false" aria-controls="panelWifi" tabindex="-1">Wi-Fi <span id="wifiCount" class="tab-count">0</span></button>
+    <button id="tabDevice" role="tab" type="button" aria-selected="false" aria-controls="panelDevice" tabindex="-1">기기</button>
+  </div>
+  <form id="settings" novalidate>
+    <fieldset id="fields" disabled>
+      <div id="panelContent" class="panel" role="tabpanel" aria-labelledby="tabContent">
+        <div class="section"><div class="section-head"><h2>화면 모드</h2></div><div class="modes"><label><input name="mode" type="radio" value="0" checked><span>대시보드</span></label><label><input name="mode" type="radio" value="1"><span>큰 메모</span></label><label><input name="mode" type="radio" value="2"><span>시계</span></label></div></div>
+        <fieldset id="dashboardFields" class="editor">
+          <p id="dashboardHint" class="hint" hidden></p>
+          <div class="section"><div class="section-head"><h2>대표 D-DAY</h2><span id="ddayPreview" class="hint"></span></div><div class="date-row"><input id="ddayTitle" type="text" placeholder="예: 겨울방학" aria-label="대표 D-DAY 이름"><input id="ddayDate" type="date" min="2000-01-01" max="2099-12-31" aria-label="대표 D-DAY 날짜"></div></div>
+          <div class="section"><div class="section-head"><h2>메모</h2><span class="hint">각 2줄 · 한 줄 22자</span></div><div class="notes"><div><div class="note-head"><label for="note0">메모 1</label><span id="note0Count">0 / 22자</span></div><textarea id="note0" class="note-input" rows="2" placeholder="첫째 줄&#10;필요하면 둘째 줄" aria-describedby="note0Count"></textarea></div><div><div class="note-head"><label for="note1">메모 2</label><span id="note1Count">0 / 22자</span></div><textarea id="note1" class="note-input" rows="2" placeholder="첫째 줄&#10;필요하면 둘째 줄" aria-describedby="note1Count"></textarea></div></div></div>
+          <div class="section"><div class="section-head"><h2>주요 일정</h2><span class="hint">최대 3개 · 위에서부터 표시</span></div><div class="column-head" aria-hidden="true"><span>일정 이름</span><span>날짜</span></div><div id="importantItems"></div></div>
+        </fieldset>
+        <div id="largeMemoSection" class="section" hidden><div class="section-head"><h2>큰 메모 내용</h2><span id="counter" class="hint"></span></div><textarea id="memo" rows="5" placeholder="큰 메모 또는 시계 화면에 표시할 글"></textarea></div>
+      </div>
+      <div id="panelWifi" class="panel" role="tabpanel" aria-labelledby="tabWifi" hidden>
+        <div class="section-head"><h2>저장된 Wi-Fi</h2><span id="savedWifiCount" class="hint">연결 후 확인</span></div>
+        <p id="wifiStatus" class="wifi-status">기기에 저장된 목록을 불러옵니다.</p>
+        <div id="profiles"></div><button id="addWifi" type="button" class="add-network">＋ Wi-Fi 추가</button>
+        <p class="hint">최대 4개 · 2.4GHz Wi-Fi<br>기존 비밀번호는 빈칸으로 유지됩니다. 저장 후 기기가 연결을 시도합니다.</p>
+      </div>
+      <div id="panelDevice" class="panel" role="tabpanel" aria-labelledby="tabDevice" hidden>
+        <div class="setting-row two-col"><label>자료 갱신<select id="interval"><option value="0">5분마다</option><option value="1">15분마다</option><option value="2">30분마다</option><option value="3">1시간마다</option></select></label><label>전체 갱신<select id="fullInterval"><option value="0">30분마다</option><option value="1">1시간마다</option><option value="2">2시간마다</option></select></label></div>
+        <div class="setting-row"><label class="switch"><input id="partial" type="checkbox" checked>흑백 부분 갱신</label><small>빨강이 바뀌면 전체 화면을 갱신합니다.</small></div>
+        <div class="setting-row"><label class="switch"><input id="quiet" type="checkbox">야간 갱신 정지</label><div id="quietHours" class="two-col quiet-hours" hidden><label>시작<select id="quietStart"></select></label><label>종료<select id="quietEnd"></select></label></div></div>
+        <details class="advanced"><summary>문제가 생겼을 때</summary><p class="hint">Wi-Fi 연결 실패는 설정 삭제와 다릅니다. Wi-Fi 탭에서 저장 개수와 마지막 결과를 확인하세요.</p><button id="refresh" type="button" class="secondary">수정 없이 기기 화면으로 돌아가기</button><button id="format" type="button" class="secondary">화면 캐시 저장소 초기화</button><p class="hint">캐시 초기화는 저장소 오류가 있을 때만 사용하세요. Wi-Fi와 메모는 유지됩니다.</p></details>
+      </div>
+    </fieldset>
+    <footer><progress id="transferProgress" max="100" value="0" aria-label="설정 전송 진행률" hidden></progress><button id="save" type="submit" class="primary" disabled>저장하고 대시보드로 돌아가기</button><div id="saveState" role="status" aria-live="polite">기기 연결 후 저장할 수 있어요</div></footer>
+  </form>
+</main>
+<script type="module">
+/* APP_SCRIPT */
+</script>
+</body>
+</html>
