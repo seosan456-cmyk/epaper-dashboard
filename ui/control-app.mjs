@@ -25,7 +25,7 @@ const TX='780fe0d0-7253-4fd4-8f93-1475b0a09903';
 const encoder=new TextEncoder();
 function crc32(bytes){let c=0xffffffff;for(const b of bytes){c^=b;for(let i=0;i<8;i++)c=(c>>>1)^((c&1)?0xedb88320:0);}return (c^0xffffffff)>>>0;}
 function encodeSettings(s){
-  for(const [key,max] of [['mode',2],['interval',3],['fullInterval',2],['flags',3],['quietStart',23],['quietEnd',23]]){
+  for(const [key,max] of [['mode',3],['interval',3],['fullInterval',2],['flags',3],['quietStart',23],['quietEnd',23]]){
     if(!Number.isInteger(s[key])||s[key]<0||s[key]>max)throw Error('설정 값이 올바르지 않아요.');
   }
   const normalized=s.memo.replaceAll('\r\n','\n'),memo=encoder.encode(normalized);
@@ -58,7 +58,7 @@ class BleTransport {
     this.pending=result.catch(()=>{});return result;
   }
   async send(op,args,timeout){
-    if(args.length>18)throw Error('전송 크기 오류');
+    if(args.length>(op===21?242:18))throw Error('전송 크기 오류');
     this.busy=true;try{
       this.seq=this.seq%255+1;const seq=this.seq,request=new Uint8Array([seq,op,...args]);
       await this.rx.writeValueWithResponse(request);const start=Date.now();
@@ -89,6 +89,7 @@ class BleTransport {
 
 const $=id=>document.getElementById(id);
 let device=null,link=null,profiles=[],working=false,expectedDisconnect=false;
+let bookCapability=null,bookBytes=null,bookSource='';
 let firmwareVersion=1,dirty=false,loaded=false,dashboardConfigured=false;
 let commitStarted=false,saveConfirmed=false,lastActivity=Date.now();
 let completionMessage='기기가 Wi-Fi로 화면을 갱신합니다.';
@@ -139,8 +140,8 @@ function updateCounters(){
 }
 function updateMode(){
   const mode=Number(document.querySelector('input[name=mode]:checked').value);
-  $('dashboardFields').hidden=mode!==0;$('largeMemoSection').hidden=mode===0;
-  $('save').textContent='저장하고 '+['대시보드','큰 메모','시계'][mode]+'로 돌아가기';
+  $('dashboardFields').hidden=mode!==0;$('largeMemoSection').hidden=mode===0||mode===3;$('ebookSection').hidden=mode!==3;
+  $('save').textContent='저장하고 '+['대시보드','큰 메모','시계','E-book'][mode]+'로 돌아가기';
 }
 function blankProfile(){return {ssid:'',savedSsid:'',password:'',hasPassword:false,keep:false,open:false,expanded:true};}
 function drawNetworks(){
@@ -190,6 +191,8 @@ function wifiDiagnostics(s){
 function showSettings(s){
   if(s.version!==1&&s.version!==2)throw Error('설정 페이지와 펌웨어 버전이 맞지 않아요.');
   if(!Array.isArray(s.profiles)||s.profiles.length>4||s.profiles.some(p=>typeof p.ssid!=='string'||typeof p.hasPassword!=='boolean'))throw Error('Wi-Fi 목록을 읽지 못했어요. 다시 연결해 주세요.');
+  bookCapability=s.ebook||null;$('ebookMode').hidden=!bookCapability?.supported;
+  $('bookStatus').textContent=bookCapability?.sd?('SD 연결됨 · '+(bookCapability.pages?bookCapability.pages+'페이지 · 현재 '+bookCapability.page+'쪽':'저장된 책 없음')):'SD카드 인식 안 됨 · 전원을 끄고 FAT32 카드를 넣어 주세요';
   firmwareVersion=s.version;dashboardConfigured=!!s.dashboardConfigured;
   $('dashboardFields').disabled=s.version<2;$('dashboardHint').hidden=s.version>=2&&s.dashboardConfigured;
   $('dashboardHint').textContent=s.version<2?'대시보드 내용 편집은 v2.0 이상 펌웨어가 필요합니다.':'처음 저장하면 구글 시트 대신 아래 내용을 표시합니다. 빈 항목은 숨겨집니다.';
@@ -239,7 +242,13 @@ $('settings').onsubmit=async event=>{
   try{
     next=collect();if(firmwareVersion>=2)next.dashboard=validateDashboard(next.dashboard);encodeSettings(next);
     if(firmwareVersion>=2&&!dashboardConfigured&&!confirm('처음 저장하면 구글 시트 대신 이 내용으로 대시보드를 표시합니다. 빈 항목은 숨겨집니다. 저장할까요?'))return;
-    const activeLink=link;$('transferProgress').hidden=false;$('transferProgress').value=0;
+    const activeLink=link;
+    if(next.mode===3){
+      if(!bookCapability?.sd)throw Error('SD카드가 인식되지 않았어요.');
+      if($('bookText').value.trim()){if(!bookBytes||bookSource!==$('bookText').value)await prepareBook();await transferBook(activeLink,bookBytes);bookCapability.pages=new DataView(bookBytes.buffer).getUint32(8,true);$('bookText').value='';$('bookFile').value='';bookBytes=null;bookSource='';}
+      else if(!bookCapability.pages)throw Error('TXT 파일 또는 본문을 먼저 넣어 주세요.');
+    }
+    $('transferProgress').hidden=false;$('transferProgress').value=0;
     await activeLink.save(next,(progress,phase)=>{
       $('transferProgress').value=progress;commitStarted=phase==='commit';
       saveState(phase==='commit'?'기기에 저장 중':'전송 중 · '+progress+'%');
@@ -249,6 +258,7 @@ $('settings').onsubmit=async event=>{
     saveConfirmed=true;showSettings(saved);saveState('저장 확인 완료 · 기기 화면으로 돌아가는 중');
     message('설정을 저장하고 다시 불러와 확인했어요. Wi-Fi로 화면을 갱신합니다.');
     completionMessage='저장 확인 완료. 블루투스가 종료됐어요. 기기가 Wi-Fi로 화면을 갱신합니다.';completionState='저장 확인 완료 · Wi-Fi로 화면 갱신 중';expectedDisconnect=true;
+    if(next.mode===3){completionMessage='책과 설정을 저장했어요. SD카드에서 이어 읽기를 시작합니다.';completionState='E-book 여는 중';message(completionMessage);}
     await activeLink.command(5);
   }catch(error){
     expectedDisconnect=false;
@@ -284,3 +294,30 @@ if(!window.isSecureContext)message('HTTPS 주소로 열어야 블루투스를 �
 else if(!navigator.bluetooth)message('블루투스 설정은 Android Chrome에서 지원합니다. 이 주소를 Chrome에서 직접 열어 주세요.',true);
 fillDashboard(emptyDashboard());updateMode();setBusy(false);
 
+
+
+async function prepareBook(){
+  const text=$('bookText').value;if(encoder.encode(text).length>1024*1024)throw Error('본문은 최대 1MB입니다.');
+  bookBytes=await ebookCompile(text,(page,total)=>{$('bookProgress').textContent='페이지 만드는 중 · '+page+' / '+total;},$('bookPreview'));
+  bookSource=text;$('bookPreview').hidden=false;$('bookProgress').textContent='변환 완료 · '+new DataView(bookBytes.buffer).getUint32(8,true)+'페이지 · '+Math.ceil(bookBytes.length/1024)+'KB';
+}
+async function transferBook(transport,bytes){
+  let wakeLock;try{
+    try{wakeLock=await navigator.wakeLock?.request('screen');}catch{}
+    const head=new Uint8Array(8),view=new DataView(head.buffer);view.setUint32(0,bytes.length,true);view.setUint32(4,ebookCrc(bytes),true);
+    await transport.command(20,head);const started=Date.now();
+    for(let offset=0;offset<bytes.length;offset+=200){
+      const chunk=bytes.slice(offset,offset+200),args=new Uint8Array(4+chunk.length);new DataView(args.buffer).setUint32(0,offset,true);args.set(chunk,4);
+      await transport.command(21,args,15000);
+      const percent=Math.floor((offset+chunk.length)/bytes.length*100);$('bookProgress').textContent='SD카드로 전송 중 · '+percent+'% · '+Math.round((Date.now()-started)/1000)+'초';
+    }
+    $('bookProgress').textContent='SD카드의 모든 페이지를 검사하는 중';await transport.command(22,new Uint8Array(),120000);
+    $('bookProgress').textContent='책 저장·검사 완료';
+  }catch(error){try{await transport.command(23);}catch{}throw error;}finally{await wakeLock?.release();}
+}
+$('bookFile').onchange=async()=>{
+  const file=$('bookFile').files[0];if(!file)return;
+  try{if(file.size>1024*1024)throw Error('TXT 파일은 최대 1MB입니다.');const bytes=await file.arrayBuffer();let text;try{text=new TextDecoder('utf-8',{fatal:true}).decode(bytes);}catch{text=new TextDecoder('euc-kr',{fatal:true}).decode(bytes);}$('bookText').value=text;bookBytes=null;markDirty();$('bookPreview').hidden=true;$('bookProgress').textContent=file.name+' · 미리보기를 눌러 확인하세요.';}catch(e){message(e.message,true);}
+};
+$('bookText').oninput=()=>{bookBytes=null;markDirty();};
+$('bookConvert').onclick=async()=>{if(working)return;setBusy(true);try{await prepareBook();}catch(e){message(e.message,true);}finally{setBusy(false);}};
