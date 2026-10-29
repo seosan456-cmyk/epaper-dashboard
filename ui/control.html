@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f5f3ee">
   <title>전자잉크 · 기기 설정</title>
-  <style>
+  <style>@font-face{font-family:EbookPretendard;src:url(data:font/otf;base64,__EBOOK_FONT_BASE64__) format("opentype");font-weight:400}#bookPreview{max-width:240px;width:100%;height:auto;border:1px solid #ccc}.modes{flex-wrap:wrap}
     :root{color-scheme:light;--paper:#f5f3ee;--ink:#222823;--muted:#677066;--line:#d9ded4;--accent:#365b42;--error:#923d2b}
     *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif}
     [hidden]{display:none!important}main{max-width:620px;margin:auto;padding:22px 16px 0}header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}h1{font-size:23px;letter-spacing:-1px;margin:0}.eyebrow{font-size:10px;letter-spacing:2px;font-weight:700;color:var(--muted);margin-bottom:3px}.version{font-size:10px;color:var(--muted)}
@@ -27,7 +27,7 @@
 </head>
 <body>
 <main>
-  <header><div><div class="eyebrow">E-PAPER</div><h1>기기 설정</h1></div><span class="version">설정 화면 2.3</span></header>
+  <header><div><div class="eyebrow">E-PAPER</div><h1>기기 설정</h1></div><span class="version">설정 화면 2.5</span></header>
   <div class="connect-card"><div class="connection-copy"><div class="connection-top"><span id="connectionDot" class="dot" aria-hidden="true"></span><b id="deviceName">기기를 연결해 주세요</b></div><div id="connectionState">블루투스 연결 전</div></div><button type="button" id="connect" class="primary">기기 연결</button></div>
   <p id="message" role="status" aria-live="polite">RESET 또는 KEY를 길게 눌러 설정 모드를 켠 뒤 연결하세요.</p>
   <div class="tabs" role="tablist" aria-label="설정 영역">
@@ -38,14 +38,23 @@
   <form id="settings" novalidate>
     <fieldset id="fields" disabled>
       <div id="panelContent" class="panel" role="tabpanel" aria-labelledby="tabContent">
-        <div class="section"><div class="section-head"><h2>화면 모드</h2></div><div class="modes"><label><input name="mode" type="radio" value="0" checked><span>대시보드</span></label><label><input name="mode" type="radio" value="1"><span>큰 메모</span></label><label><input name="mode" type="radio" value="2"><span>시계</span></label></div></div>
+        <div class="section"><div class="section-head"><h2>화면 모드</h2></div><div class="modes"><label><input name="mode" type="radio" value="0" checked><span>대시보드</span></label><label><input name="mode" type="radio" value="1"><span>큰 메모</span></label><label><input name="mode" type="radio" value="2"><span>시계</span></label><label id="ebookMode" hidden><input name="mode" type="radio" value="3"><span>E-book</span></label></div></div>
         <fieldset id="dashboardFields" class="editor">
           <p id="dashboardHint" class="hint" hidden></p>
           <div class="section"><div class="section-head"><h2>대표 D-DAY</h2><span id="ddayPreview" class="hint"></span></div><div class="date-row"><input id="ddayTitle" type="text" placeholder="예: 겨울방학" aria-label="대표 D-DAY 이름"><input id="ddayDate" type="date" min="2000-01-01" max="2099-12-31" aria-label="대표 D-DAY 날짜"></div></div>
           <div class="section"><div class="section-head"><h2>메모</h2><span class="hint">각 2줄 · 한 줄 22자</span></div><div class="notes"><div><div class="note-head"><label for="note0">메모 1</label><span id="note0Count">0 / 22자</span></div><textarea id="note0" class="note-input" rows="2" placeholder="첫째 줄&#10;필요하면 둘째 줄" aria-describedby="note0Count"></textarea></div><div><div class="note-head"><label for="note1">메모 2</label><span id="note1Count">0 / 22자</span></div><textarea id="note1" class="note-input" rows="2" placeholder="첫째 줄&#10;필요하면 둘째 줄" aria-describedby="note1Count"></textarea></div></div></div>
           <div class="section"><div class="section-head"><h2>주요 일정</h2><span class="hint">최대 3개 · 위에서부터 표시</span></div><div class="column-head" aria-hidden="true"><span>일정 이름</span><span>날짜</span></div><div id="importantItems"></div></div>
         </fieldset>
-        <div id="largeMemoSection" class="section" hidden><div class="section-head"><h2>큰 메모 내용</h2><span id="counter" class="hint"></span></div><textarea id="memo" rows="5" placeholder="큰 메모 또는 시계 화면에 표시할 글"></textarea></div>
+        <div id="ebookSection" class="section" hidden>
+<div class="section-head"><h2>E-book</h2><span class="hint">24px · 한 권 저장</span></div>
+<p id="bookStatus" class="hint"></p>
+<label for="bookFile">TXT 파일 선택 (UTF-8 또는 EUC-KR, 최대 1MB)</label><input id="bookFile" type="file" accept=".txt,text/plain">
+<textarea id="bookText" rows="7" placeholder="또는 여기에 본문을 붙여 넣으세요"></textarea>
+<button id="bookConvert" type="button" class="secondary">페이지 미리보기</button>
+<p class="hint">KEY 한 번: 다음 · 두 번: 이전 · 2초 길게: 설정. 20줄씩 나누며 빈 줄도 유지합니다. 아래 저장 버튼을 누르면 책을 SD카드로 전송합니다. 전송 중 이 화면을 열어 두세요.</p>
+<canvas id="bookPreview" hidden aria-label="첫 페이지 미리보기"></canvas>
+<p id="bookProgress" role="status" aria-live="polite"></p>
+</div><div id="largeMemoSection" class="section" hidden><div class="section-head"><h2>큰 메모 내용</h2><span id="counter" class="hint"></span></div><textarea id="memo" rows="5" placeholder="큰 메모 또는 시계 화면에 표시할 글"></textarea></div>
       </div>
       <div id="panelWifi" class="panel" role="tabpanel" aria-labelledby="tabWifi" hidden>
         <div class="section-head"><h2>저장된 Wi-Fi</h2><span id="savedWifiCount" class="hint">연결 후 확인</span></div>
@@ -68,3 +77,4 @@
 </script>
 </body>
 </html>
+
